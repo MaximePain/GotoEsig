@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "572546765782",
+    "project_id": "gotoesig-786a0",
+    "storage_bucket": "gotoesig-786a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572546765782:android:67173d6dd0f729334aca77",
+        "android_client_info": {
+          "package_name": "fr.esigelec.gotoesig"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572546765782-m5u62agoe74dukolm5sdvhadrea28ps2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfwrLVCmgrMmVgnI5KTNsWhYQEnlty_IQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572546765782-m5u62agoe74dukolm5sdvhadrea28ps2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
