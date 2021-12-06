@@ -21,6 +21,14 @@
     <string name="login_failed">"Login failed"</string>
     <string name="authentification">Authentification</string>
     <string name="adresse_mail">Adresse mail</string>
-    <string name="connexion">connexion</string>
-    <string name="inscription">inscription</string>
+    <string name="connexion">Connexion</string>
+    <string name="inscription">Inscription</string>
+    <string name="photo_de_profil">Photo de profil</string>
+    <string name="nom">Nom</string>
+    <string name="pr_nom">Prénom</string>
+    <string name="num_ro_de_t_l_phone">Numéro de téléphone</string>
+    <string name="ville">Ville</string>
+    <string name="retour">Retour</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
