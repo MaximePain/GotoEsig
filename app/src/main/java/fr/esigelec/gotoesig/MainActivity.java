@@ -1,23 +1,18 @@
 package fr.esigelec.gotoesig;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -26,13 +21,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fr.esigelec.gotoesig.databinding.ActivityMainBinding;
-import fr.esigelec.gotoesig.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    public User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,32 +34,21 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser fUser = auth.getCurrentUser();
-        if (fUser == null)
-            backToLogin();
-
-        db.collection("Users").document(fUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    assert doc != null;
-                    user = doc.toObject(User.class);
-                    InitAfterLogged();
-                } else
-                    backToLogin();
-            }
-        });
+        checkLocationPermission();
 
         setSupportActionBar(binding.appBarMain.toolbar);
-
+        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_profile, R.id.nav_home, R.id.nav_gallery)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -89,20 +71,67 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void backToLogin() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_location_permission)
+                        .setMessage(R.string.text_location_permission)
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                ActivityCompat.requestPermissions(MainActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+
+
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
-    private void InitAfterLogged(){
-        ImageView profilePictureNav = findViewById(R.id.profilePictureNav);
-        TextView nomNav = findViewById(R.id.nomNav);
-        TextView emailNav = findViewById(R.id.emailNav);
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-        Bitmap img = ImageEncoder.decodeImageBitmap(user.getImage());
-        profilePictureNav.setImageBitmap(img);
+                    // permission was granted, yay! Do the
+                    // location-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                    }
 
-        nomNav.setText(user.getNom());
-        emailNav.setText(user.getEmail());
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+        }
     }
 }
