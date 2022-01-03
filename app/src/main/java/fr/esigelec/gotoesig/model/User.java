@@ -17,6 +17,8 @@ public class User {
         Image = image;
     }
 
+    public User(){}
+
     public String getEmail() {
         return Email;
     }
