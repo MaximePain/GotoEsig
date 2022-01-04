@@ -19,6 +19,8 @@ public class Trajet implements Serializable {
     int duree;
     String ownerUid;
     ArrayList<String> usersUid;
+    String nomVille;
+    String addresseComplete;
 
     public Trajet() {usersUid = new ArrayList<>();}
 
@@ -108,5 +110,21 @@ public class Trajet implements Serializable {
 
     public void setUsersUid(ArrayList<String> usersUid) {
         this.usersUid = usersUid;
+    }
+
+    public String getNomVille() {
+        return nomVille;
+    }
+
+    public void setNomVille(String nomVille) {
+        this.nomVille = nomVille;
+    }
+
+    public String getAddresseComplete() {
+        return addresseComplete;
+    }
+
+    public void setAddresseComplete(String addresseComplete) {
+        this.addresseComplete = addresseComplete;
     }
 }

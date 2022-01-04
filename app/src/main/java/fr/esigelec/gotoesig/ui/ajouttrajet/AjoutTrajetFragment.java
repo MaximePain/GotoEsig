@@ -1,5 +1,6 @@
 package fr.esigelec.gotoesig.ui.ajouttrajet;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -86,6 +88,9 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
     private Boolean datePicked = false;
     private Boolean hourPicked = false;
     private LatLng currentLatLng = null;
+
+    private String nomVille = "";
+    private String addresseComplete = "";
 
     private Calendar calendar;
 
@@ -215,13 +220,28 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
 
     @Override
     public void click(Place place) {
-        Toast.makeText(mainActivity, place.getAddress()+", "+ place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mainActivity, place.getAddress()+", "+ place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
         if (recyclerView.getVisibility() == View.VISIBLE) {recyclerView.setVisibility(View.GONE);}
         adressSetted = true;
         adressJustSetted = true;
+
+        nomVille = place.getName();
+        addresseComplete = place.getAddress();
+
         currentLatLng = place.getLatLng();
         binding.placeSearch.setText(place.getAddress());
         updateValiderButton();
+
+
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) mainActivity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        if(inputMethodManager.isAcceptingText()){
+            inputMethodManager.hideSoftInputFromWindow(
+                    mainActivity.getCurrentFocus().getWindowToken(),
+                    0
+            );
+        }
     }
 
     private void updateSpinner(Context context){
@@ -350,6 +370,8 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
                 //on ajoute a firebase etc
 
                 Trajet trajet = new Trajet();
+                trajet.setNomVille(nomVille);
+                trajet.setAddresseComplete(addresseComplete);
                 trajet.setDistance(distance);
                 trajet.setDuree(duration);
                 trajet.setPointDepart(currentLatLng);
@@ -391,12 +413,15 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
     }
 
     void ajoutFini(){
-        Fragment fragment = new AjoutTrajetFragment();
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.nav_host_fragment_content_main);
-        fl.removeAllViews();
-        fragmentTransaction.add(R.id.nav_host_fragment_content_main, fragment);
-        fragmentTransaction.commit();
+        binding.placeSearch.setText("");
+        binding.editDate.setText("");
+        binding.editHeure.setText("");
+        binding.autoroute.setChecked(false);
+        binding.retard.setText("");
+        binding.contribution.setText("");
+        binding.nbPlaces.setText("");
+        adressSetted = false;
+        datePicked = false;
+        hourPicked = false;
     }
 }

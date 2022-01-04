@@ -19,7 +19,7 @@
         android:id="@+id/nav_mestrajets"
         android:name="fr.esigelec.gotoesig.ui.mestrajets.MesTrajetsFragment"
         android:label="@string/mes_trajets"
-        tools:layout="@layout/fragment_mes_trajets" />
+        tools:layout="@layout/fragment_mestrajets_list" />
     <fragment
         android:id="@+id/nav_cherchertrajet"
         android:name="fr.esigelec.gotoesig.ui.cherchertrajet.ChercherTrajetFragment"
