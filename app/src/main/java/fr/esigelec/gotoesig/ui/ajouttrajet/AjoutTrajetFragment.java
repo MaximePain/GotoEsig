@@ -5,11 +5,14 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -39,9 +43,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -57,9 +65,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.esigelec.gotoesig.LoginActivity;
 import fr.esigelec.gotoesig.MainActivity;
 import fr.esigelec.gotoesig.R;
+import fr.esigelec.gotoesig.RegisterActivity;
 import fr.esigelec.gotoesig.databinding.FragmentAjoutTrajetBinding;
+import fr.esigelec.gotoesig.model.Trajet;
+import fr.esigelec.gotoesig.ui.profile.ProfileFragment;
 
 
 public class AjoutTrajetFragment extends Fragment  implements PlacesAutoCompleteAdapter.ClickListener{
@@ -335,6 +347,35 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                //on ajoute a firebase etc
+
+                Trajet trajet = new Trajet();
+                trajet.setDistance(distance);
+                trajet.setDuree(duration);
+                trajet.setPointDepart(currentLatLng);
+                trajet.setDateDepart(calendar.getTime());
+                trajet.setTransport(binding.spinnerTransports.getSelectedItem().toString());
+                trajet.setContribution(Integer.parseInt(binding.contribution.getText().toString()));
+                trajet.setNombrePlaces(Integer.parseInt(binding.nbPlaces.getText().toString()));
+                trajet.setAutoroute(binding.autoroute.isChecked());
+                trajet.setRetardTolere(Integer.parseInt(binding.retard.getText().toString()));
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+
+                FirebaseUser fUser = auth.getCurrentUser();
+                assert fUser != null;
+
+                trajet.setOwnerUid(fUser.getUid());
+                trajet.getUsersUid().add(fUser.getUid());
+
+                db.collection("Trajets").add(trajet).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(@NonNull DocumentReference documentReference) {
+                        ajoutFini();
+                    }
+                });
+
                 dialog.dismiss();
             }
         });
@@ -347,5 +388,15 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         });
 
         alert.show();
+    }
+
+    void ajoutFini(){
+        Fragment fragment = new AjoutTrajetFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FrameLayout fl = (FrameLayout) getActivity().findViewById(R.id.nav_host_fragment_content_main);
+        fl.removeAllViews();
+        fragmentTransaction.add(R.id.nav_host_fragment_content_main, fragment);
+        fragmentTransaction.commit();
     }
 }

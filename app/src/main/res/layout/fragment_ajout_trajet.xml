@@ -123,10 +123,32 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Nombre de places"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/nbPlaces"
+                    android:layout_width="100dp"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Retard tolélé (en min):"
                     android:textSize="20sp" />
 
                 <EditText
+                    android:id="@+id/retard"
                     android:layout_width="100dp"
                     android:inputType="number"
                     android:layout_height="wrap_content"
@@ -146,6 +168,7 @@
                     android:textSize="20sp"/>
 
                 <CheckBox
+                    android:id="@+id/autoroute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -164,6 +187,7 @@
                     android:textSize="20sp"/>
 
                 <EditText
+                    android:id="@+id/contribution"
                     android:layout_width="100dp"
                     android:inputType="number"
                     android:layout_height="wrap_content"
