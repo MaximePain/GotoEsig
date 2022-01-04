@@ -275,7 +275,7 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
     }
 
     private void ajouterTrajet(){
-        binding.buttonValider.setClickable(false); // pour eviter de spam le boutton ( on sait jamais )
+        //binding.buttonValider.setClickable(false); // pour eviter de spam le boutton ( on sait jamais )
 
         String api_key = getResources().getString(R.string.openrouteservice_key);
         String profile = "driving-car";

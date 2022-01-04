@@ -2,6 +2,7 @@ package fr.esigelec.gotoesig.ui.mestrajets;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -35,7 +36,6 @@ public class MesTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<MesTraje
 
         holder.nomVille.setText(holder.item.nomVille);
         holder.addresseComplete.setText(holder.item.addresseComplete);
-        holder.textEnCours.setText("en cours");
         holder.transportText.setText(holder.item.transportText);
 
         Calendar cal = Calendar.getInstance();
@@ -44,6 +44,17 @@ public class MesTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<MesTraje
         String dateStr = format.format(cal.getTime());
 
         holder.date.setText(dateStr);
+
+
+        String enCours = "Disponible";
+
+        if(Calendar.getInstance().getTime().after(cal.getTime()))
+        {
+            enCours = "Terminé";
+            holder.textEnCours.setTextColor(Color.rgb(200,0,0));
+        }
+        holder.textEnCours.setText(enCours);
+
         holder.placesNb.setText(holder.item.placesNb);
         holder.prix.setText(holder.item.prix);
         holder.checkboxAutoroute.setChecked(holder.item.checkboxAutoroute);
