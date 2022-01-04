@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -45,6 +46,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -68,6 +70,7 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
     private FragmentAjoutTrajetBinding binding;
     private ArrayList<String> transportsList;
     private Boolean adressSetted = false;
+    private Boolean adressJustSetted = false;
     private Boolean datePicked = false;
     private Boolean hourPicked = false;
     private LatLng currentLatLng = null;
@@ -180,6 +183,10 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
 
     private TextWatcher filterTextWatcher = new TextWatcher() {
         public void afterTextChanged(Editable s) {
+            if(adressJustSetted) {
+                adressJustSetted = false;
+                return;
+            }
             adressSetted = false;
             if (!s.toString().equals("")) {
                 mAutoCompleteAdapter.getFilter().filter(s.toString());
@@ -199,8 +206,10 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         Toast.makeText(mainActivity, place.getAddress()+", "+ place.getLatLng().latitude+place.getLatLng().longitude, Toast.LENGTH_SHORT).show();
         if (recyclerView.getVisibility() == View.VISIBLE) {recyclerView.setVisibility(View.GONE);}
         adressSetted = true;
+        adressJustSetted = true;
         currentLatLng = place.getLatLng();
         binding.placeSearch.setText(place.getAddress());
+        updateValiderButton();
     }
 
     private void updateSpinner(Context context){
@@ -240,17 +249,46 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         String profile = "driving-car";
 
         try {
-            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-            String URL = "https://api.openrouteservice.org/v2/matrix/driving-car";
+            RequestQueue requestQueue = Volley.newRequestQueue(mainActivity);
+            String URL = "https://api.openrouteservice.org/v2/matrix/" + profile;
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("Title", "Android Volley Demo");
-            jsonBody.put("Author", "BNK");
+            JSONArray jsonArrayLoc = new JSONArray();
+
+            JSONArray jsonArrayLatLngDepart = new JSONArray();
+            jsonArrayLatLngDepart.put(currentLatLng.longitude);
+            jsonArrayLatLngDepart.put(currentLatLng.latitude);
+
+            JSONArray jsonArrayLatLngESIG = new JSONArray();
+            jsonArrayLatLngESIG.put(1.0768526208801905);
+            jsonArrayLatLngESIG.put(49.383452962302734); //coordonnées de l'esigelec
+
+            jsonArrayLoc.put(jsonArrayLatLngDepart);
+            jsonArrayLoc.put(jsonArrayLatLngESIG);
+            jsonBody.put("locations", jsonArrayLoc);
+
+            JSONArray metrics = new JSONArray();
+            metrics.put("distance");
+            metrics.put("duration");
+            jsonBody.put("metrics", metrics);
+
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("VOLLEY", response);
+
+                    try {
+                        JSONObject obj = new JSONObject(response);
+
+                        int distance = (int)(Double.parseDouble(obj.getJSONArray("distances").getJSONArray(0).getString(1)) / 1000);
+                        int duration = (int)(Double.parseDouble(obj.getJSONArray("durations").getJSONArray(0).getString(1)) / 60);
+
+                        ajouterConfirmation(distance, duration);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -276,19 +314,9 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError{
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("Content-Type", "application/json; charset=UTF-8");
-                    params.put("Authorization ", api_key);
+                    params.put("Accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8");
+                    params.put("Authorization", api_key);
                     return params;
-                }
-
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null) {
-                        responseString = String.valueOf(response.statusCode);
-                        // can get more details such as response.headers
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
                 }
             };
 
@@ -297,8 +325,27 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
             e.printStackTrace();
         }
 
-        /*AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+    }
+
+    public void ajouterConfirmation(int distance, int duration){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("Ajout du trajet?");
-        alert.setMessage("Distance (km):     Durée(min): ");*/
+        alert.setMessage("Distance: " + distance + "km - Durée: " + duration + "min");
+        alert.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        alert.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alert.show();
     }
 }
