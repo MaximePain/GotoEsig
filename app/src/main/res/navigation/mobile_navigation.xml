@@ -10,16 +10,30 @@
         android:name="fr.esigelec.gotoesig.ui.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
-
     <fragment
-        android:id="@+id/nav_home"
-        android:name="fr.esigelec.gotoesig.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/nav_ajouttrajet"
+        android:name="fr.esigelec.gotoesig.ui.ajouttrajet.AjoutTrajetFragment"
+        android:label="@string/ajouter_un_trajet"
+        tools:layout="@layout/fragment_ajout_trajet" />
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="fr.esigelec.gotoesig.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_mestrajets"
+        android:name="fr.esigelec.gotoesig.ui.mestrajets.MesTrajetsFragment"
+        android:label="@string/mes_trajets"
+        tools:layout="@layout/fragment_mes_trajets" />
+    <fragment
+        android:id="@+id/nav_cherchertrajet"
+        android:name="fr.esigelec.gotoesig.ui.cherchertrajet.ChercherTrajetFragment"
+        android:label="@string/chercher_un_trajet"
+        tools:layout="@layout/fragment_chercher_trajet" />
+    <fragment
+        android:id="@+id/nav_evaluertrajet"
+        android:name="fr.esigelec.gotoesig.ui.evaluertrajet.EvaluerTrajetFragment"
+        android:label="@string/evaluer_un_trajet"
+        tools:layout="@layout/fragment_evaluer_trajet" />
+    <fragment
+        android:id="@+id/nav_statistiques"
+        android:name="fr.esigelec.gotoesig.ui.statistiques.StatistiquesFragment"
+        android:label="@string/statistiques"
+        tools:layout="@layout/fragment_statistiques" />
+
 </navigation>

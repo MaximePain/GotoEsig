@@ -71,14 +71,6 @@
         android:layout_marginBottom="10dp"
         android:hint="@string/num_ro_de_t_l_phone"
         />
-    <EditText
-        android:id="@+id/inputVille"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:hint="@string/ville"
-        />
 
     <LinearLayout
         android:layout_width="match_parent"
