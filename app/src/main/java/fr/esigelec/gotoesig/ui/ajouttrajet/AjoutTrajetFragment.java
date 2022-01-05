@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -88,6 +89,7 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
     private Boolean datePicked = false;
     private Boolean hourPicked = false;
     private LatLng currentLatLng = null;
+    private Boolean isVehicule = true;
 
     private String nomVille = "";
     private String addresseComplete = "";
@@ -139,6 +141,20 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         EditText editHeure = binding.editHeure;
 
         Button buttonValider = binding.buttonValider;
+
+        Spinner spinner = binding.spinnerTransports;
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                isVehicule = spinner.getSelectedItem().toString() == "Véhicule";
+                updateVehicleSelected(isVehicule);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         buttonDate.setOnClickListener(view1 -> {
             final Calendar c = Calendar.getInstance();
@@ -274,6 +290,22 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
             binding.buttonValider.setVisibility(View.INVISIBLE);
     }
 
+    private void updateVehicleSelected(Boolean vehicle){
+        if(vehicle)
+        {
+            binding.autoroute.setVisibility(View.VISIBLE);
+            binding.contribution.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            binding.autoroute.setVisibility(View.GONE);
+            binding.contribution.setVisibility(View.GONE);
+        }
+
+        binding.autoroute.setChecked(false);
+        binding.contribution.setText("0");
+    }
+
     private void ajouterTrajet(){
         //binding.buttonValider.setClickable(false); // pour eviter de spam le boutton ( on sait jamais )
 
@@ -382,6 +414,7 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
                 trajet.setNombrePlaces(Integer.parseInt(binding.nbPlaces.getText().toString()));
                 trajet.setAutoroute(binding.autoroute.isChecked());
                 trajet.setRetardTolere(Integer.parseInt(binding.retard.getText().toString()));
+                trajet.setIsVehicule(isVehicule);
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 FirebaseAuth auth = FirebaseAuth.getInstance();

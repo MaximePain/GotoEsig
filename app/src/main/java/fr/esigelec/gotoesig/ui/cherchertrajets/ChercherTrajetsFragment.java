@@ -92,7 +92,8 @@ public class ChercherTrajetsFragment extends Fragment {
                                 ((ArrayList<String>) doc.get("usersUid")).size() - 1,
                                 doc.getDouble("latitude"),
                                 doc.getDouble("longitude"),
-                                doc.getId()
+                                doc.getId(),
+                                doc.getBoolean("isVehicule")
                         ));
                     }
                 }

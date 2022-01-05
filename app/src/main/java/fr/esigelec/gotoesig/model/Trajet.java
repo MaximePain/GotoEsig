@@ -22,6 +22,7 @@ public class Trajet implements Serializable {
     ArrayList<String> usersUid;
     String nomVille;
     String addresseComplete;
+    Boolean isVehicule;
 
     public Trajet(){
         usersUid = new ArrayList<>();
@@ -137,5 +138,13 @@ public class Trajet implements Serializable {
 
     public void setAddresseComplete(String addresseComplete) {
         this.addresseComplete = addresseComplete;
+    }
+
+    public Boolean getIsVehicule() {
+        return isVehicule;
+    }
+
+    public void setIsVehicule(Boolean isVehicule) {
+        this.isVehicule = isVehicule;
     }
 }

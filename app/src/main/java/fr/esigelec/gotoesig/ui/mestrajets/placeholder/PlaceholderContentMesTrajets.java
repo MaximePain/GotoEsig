@@ -13,24 +13,6 @@ public class PlaceholderContentMesTrajets {
 
     public static final List<PlaceholderMesTrajetsItem> ITEMS = new ArrayList<PlaceholderMesTrajetsItem>();
 
-    public static final Map<String, PlaceholderMesTrajetsItem> ITEM_MAP = new HashMap<String, PlaceholderMesTrajetsItem>();
-
-    private static final int COUNT = 25;
-
-
-    private static void addItem(PlaceholderMesTrajetsItem item) {
-        ITEMS.add(item);
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
-    }
-
     public static class PlaceholderMesTrajetsItem {
         public final String nomVille;
         public final String addresseComplete;
@@ -39,8 +21,13 @@ public class PlaceholderContentMesTrajets {
         public final String placesNb;
         public final String prix;
         public final Boolean checkboxAutoroute;
+        public final Integer nbPlaceTaken;
+        public final Double latitude;
+        public final Double longitude;
+        public final String trajetId;
+        public final Boolean isVehicule;
 
-        public PlaceholderMesTrajetsItem(String nomVille, String addresseComplete, String transportText, Date date, String placesNb, String prix, Boolean checkboxAutoroute) {
+        public PlaceholderMesTrajetsItem(String nomVille, String addresseComplete, String transportText, Date date, String placesNb, String prix, Boolean checkboxAutoroute, Integer nbPlaceTaken, Double latitude, Double longitude, String trajetId, Boolean isVehicule) {
             this.nomVille = nomVille;
             this.addresseComplete = addresseComplete;
             this.transportText = transportText;
@@ -48,6 +35,11 @@ public class PlaceholderContentMesTrajets {
             this.placesNb = placesNb;
             this.prix = prix;
             this.checkboxAutoroute = checkboxAutoroute;
+            this.nbPlaceTaken = nbPlaceTaken;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.trajetId = trajetId;
+            this.isVehicule = isVehicule;
         }
     }
 }

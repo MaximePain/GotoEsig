@@ -3,6 +3,7 @@ package fr.esigelec.gotoesig.ui.cherchertrajets;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -73,8 +74,15 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
         holder.textEnCours.setText(enCours);
 
         holder.placesNb.setText(holder.item.nbPlaceTaken + "/" + holder.item.placesNb);
-        holder.prix.setText(holder.item.prix);
-        holder.checkboxAutoroute.setChecked(holder.item.checkboxAutoroute);
+
+        if(holder.item.isVehicule) {
+            holder.prix.setText(holder.item.prix);
+            holder.checkboxAutoroute.setChecked(holder.item.checkboxAutoroute);
+        }
+        else{
+            holder.prix.setVisibility(View.GONE);
+            holder.checkboxAutoroute.setVisibility(View.GONE);
+        }
 
 
         holder.inscriptionTrajet.setOnClickListener(view -> {

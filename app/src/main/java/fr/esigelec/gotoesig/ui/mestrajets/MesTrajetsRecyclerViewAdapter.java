@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -48,16 +49,22 @@ public class MesTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<MesTraje
 
         String enCours = "Disponible";
 
-        if(Calendar.getInstance().getTime().after(cal.getTime()))
-        {
+        if (Calendar.getInstance().getTime().after(cal.getTime())) {
             enCours = "Terminé";
-            holder.textEnCours.setTextColor(Color.rgb(200,0,0));
+            holder.textEnCours.setTextColor(Color.rgb(200, 0, 0));
         }
         holder.textEnCours.setText(enCours);
 
-        holder.placesNb.setText(holder.item.placesNb);
-        holder.prix.setText(holder.item.prix);
-        holder.checkboxAutoroute.setChecked(holder.item.checkboxAutoroute);
+        holder.placesNb.setText(holder.item.nbPlaceTaken + "/" + holder.item.placesNb);
+
+        if(holder.item.isVehicule) {
+            holder.prix.setText(holder.item.prix);
+            holder.checkboxAutoroute.setChecked(holder.item.checkboxAutoroute);
+        }
+        else{
+            holder.prix.setVisibility(View.GONE);
+            holder.checkboxAutoroute.setVisibility(View.GONE);
+        }
 
     }
 

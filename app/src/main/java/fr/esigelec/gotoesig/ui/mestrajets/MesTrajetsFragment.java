@@ -19,6 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import fr.esigelec.gotoesig.databinding.FragmentMestrajetsListBinding;
@@ -78,7 +79,12 @@ public class MesTrajetsFragment extends Fragment {
                             doc.getDate("dateDepart"),
                             doc.getLong("nombrePlaces").toString(),
                             doc.getLong("contribution").toString(),
-                            doc.getBoolean("autoroute")
+                            doc.getBoolean("autoroute"),
+                            ((ArrayList<String>) doc.get("usersUid")).size() - 1,
+                            doc.getDouble("latitude"),
+                            doc.getDouble("longitude"),
+                            doc.getId(),
+                            doc.getBoolean("isVehicule")
                     ));
                 }
 
