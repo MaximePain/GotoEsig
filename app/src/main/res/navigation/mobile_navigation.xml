@@ -22,9 +22,9 @@
         tools:layout="@layout/fragment_mestrajets_list" />
     <fragment
         android:id="@+id/nav_cherchertrajet"
-        android:name="fr.esigelec.gotoesig.ui.cherchertrajet.ChercherTrajetFragment"
+        android:name="fr.esigelec.gotoesig.ui.cherchertrajets.ChercherTrajetsFragment"
         android:label="@string/chercher_un_trajet"
-        tools:layout="@layout/fragment_chercher_trajet" />
+        tools:layout="@layout/fragment_cherchertrajets" />
     <fragment
         android:id="@+id/nav_evaluertrajet"
         android:name="fr.esigelec.gotoesig.ui.evaluertrajet.EvaluerTrajetFragment"
