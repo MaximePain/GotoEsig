@@ -147,7 +147,7 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                isVehicule = spinner.getSelectedItem().toString() == "Véhicule";
+                isVehicule = spinner.getSelectedItem().toString().equals("Véhicule");
                 updateVehicleSelected(isVehicule);
             }
 
@@ -294,12 +294,16 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         if(vehicle)
         {
             binding.autoroute.setVisibility(View.VISIBLE);
+            binding.autorouteText.setVisibility(View.VISIBLE);
             binding.contribution.setVisibility(View.VISIBLE);
+            binding.contributionText.setVisibility(View.VISIBLE);
         }
         else
         {
             binding.autoroute.setVisibility(View.GONE);
+            binding.autorouteText.setVisibility(View.GONE);
             binding.contribution.setVisibility(View.GONE);
+            binding.contributionText.setVisibility(View.GONE);
         }
 
         binding.autoroute.setChecked(false);
@@ -451,9 +455,9 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         binding.editDate.setText("");
         binding.editHeure.setText("");
         binding.autoroute.setChecked(false);
-        binding.retard.setText("");
-        binding.contribution.setText("");
-        binding.nbPlaces.setText("");
+        binding.retard.setText("0");
+        binding.contribution.setText("0");
+        binding.nbPlaces.setText("1");
         adressSetted = false;
         datePicked = false;
         hourPicked = false;

@@ -109,18 +109,17 @@
             android:id="@+id/autorouteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/checkboxAutoroute"
             android:layout_alignTop="@+id/dateText"
+            android:layout_toLeftOf="@+id/checkboxAutoroute"
             android:text="Autoroute: " />
 
         <TextView
+            android:id="@+id/prixText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/prixText"
-            android:text="Prix: "
             android:layout_alignStart="@+id/autorouteText"
             android:layout_alignTop="@+id/placesText"
-            />
+            android:text="Prix: " />
 
         <TextView
             android:layout_width="wrap_content"

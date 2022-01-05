@@ -62,8 +62,10 @@ public class MesTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<MesTraje
             holder.checkboxAutoroute.setChecked(holder.item.checkboxAutoroute);
         }
         else{
-            holder.prix.setVisibility(View.GONE);
-            holder.checkboxAutoroute.setVisibility(View.GONE);
+            holder.prix.setVisibility(View.INVISIBLE);
+            holder.prixText.setVisibility(View.INVISIBLE);
+            holder.checkboxAutoroute.setVisibility(View.INVISIBLE);
+            holder.checkboxAutorouteText.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -81,7 +83,9 @@ public class MesTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<MesTraje
         public final TextView date;
         public final TextView placesNb;
         public final TextView prix;
+        public final TextView prixText;
         public final CheckBox checkboxAutoroute;
+        public final TextView checkboxAutorouteText;
         public PlaceholderMesTrajetsItem item;
 
         public ViewHolder(FragmentMestrajetsBinding binding) {
@@ -93,7 +97,9 @@ public class MesTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<MesTraje
             date = binding.date;
             placesNb = binding.placesNb;
             prix = binding.prix;
+            prixText = binding.prixText;
             checkboxAutoroute = binding.checkboxAutoroute;
+            checkboxAutorouteText = binding.autorouteText;
         }
     }
 }

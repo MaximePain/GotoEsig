@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.Map;
 
 import fr.esigelec.gotoesig.MainActivity;
+import fr.esigelec.gotoesig.databinding.FragmentCherchertrajetsBinding;
+import fr.esigelec.gotoesig.databinding.FragmentCherchertrajetsListBinding;
 import fr.esigelec.gotoesig.databinding.FragmentMestrajetsListBinding;
 import fr.esigelec.gotoesig.model.Trajet;
 import fr.esigelec.gotoesig.ui.cherchertrajets.placeholder.PlaceholderContentChercherTrajets;
@@ -37,7 +39,7 @@ public class ChercherTrajetsFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
 
     private int mColumnCount = 1;
-    private FragmentMestrajetsListBinding binding;
+    private FragmentCherchertrajetsListBinding binding;
     private MainActivity mainActivity;
 
     public ChercherTrajetsFragment() {
@@ -58,7 +60,7 @@ public class ChercherTrajetsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentMestrajetsListBinding.inflate(inflater);
+        binding = FragmentCherchertrajetsListBinding.inflate(inflater);
         View view = binding.getRoot();
 
         initRecyclerView();
