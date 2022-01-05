@@ -19,6 +19,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Arrays;
+
 import fr.esigelec.gotoesig.databinding.FragmentMestrajetsListBinding;
 import fr.esigelec.gotoesig.ui.mestrajets.placeholder.PlaceholderContentMesTrajets;
 
@@ -65,7 +67,7 @@ public class MesTrajetsFragment extends Fragment {
 
         String uid = fUser.getUid();
 
-        db.collection("Trajets").whereEqualTo("ownerUid", uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Trajets").whereArrayContains("usersUid", uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
                 for(DocumentSnapshot doc : queryDocumentSnapshots){

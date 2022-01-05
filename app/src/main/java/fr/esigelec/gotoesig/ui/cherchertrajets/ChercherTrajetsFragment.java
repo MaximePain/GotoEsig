@@ -11,21 +11,24 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
 import fr.esigelec.gotoesig.MainActivity;
 import fr.esigelec.gotoesig.databinding.FragmentMestrajetsListBinding;
+import fr.esigelec.gotoesig.model.Trajet;
 import fr.esigelec.gotoesig.ui.cherchertrajets.placeholder.PlaceholderContentChercherTrajets;
 
 
@@ -63,7 +66,7 @@ public class ChercherTrajetsFragment extends Fragment {
         return view;
     }
 
-    public void initRecyclerView(){
+    public void initRecyclerView() {
         PlaceholderContentChercherTrajets.ITEMS.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -73,30 +76,32 @@ public class ChercherTrajetsFragment extends Fragment {
 
         String uid = fUser.getUid();
 
-        db.collection("Trajets").whereNotEqualTo("ownerUid", uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Trajets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-                for(DocumentSnapshot doc : queryDocumentSnapshots){
-                    PlaceholderContentChercherTrajets.ITEMS.add(new PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem(
-                            doc.getString("nomVille"),
-                            doc.getString("addresseComplete"),
-                            doc.getString("transport"),
-                            doc.getDate("dateDepart"),
-                            doc.getLong("nombrePlaces").toString(),
-                            doc.getLong("contribution").toString(),
-                            doc.getBoolean("autoroute"),
-                            ((ArrayList<String>)doc.get("usersUid")).size() - 1,
-                            ((Map<String, Double>)doc.get("pointDepart")).get("latitude"),
-                            ((Map<String, Double>)doc.get("pointDepart")).get("longitude")
-                    ));
+                for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                    if (!((ArrayList<String>) doc.get("usersUid")).contains(uid)) {
+                        PlaceholderContentChercherTrajets.ITEMS.add(new PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem(
+                                doc.getString("nomVille"),
+                                doc.getString("addresseComplete"),
+                                doc.getString("transport"),
+                                doc.getDate("dateDepart"),
+                                doc.getLong("nombrePlaces").toString(),
+                                doc.getLong("contribution").toString(),
+                                doc.getBoolean("autoroute"),
+                                ((ArrayList<String>) doc.get("usersUid")).size() - 1,
+                                doc.getDouble("latitude"),
+                                doc.getDouble("longitude"),
+                                doc.getId()
+                        ));
+                    }
                 }
 
-                for(int i = 0; i < PlaceholderContentChercherTrajets.ITEMS.size(); i++)
-                {
+                for (int i = 0; i < PlaceholderContentChercherTrajets.ITEMS.size(); i++) {
                     Date date = PlaceholderContentChercherTrajets.ITEMS.get(i).date;
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(date);
-                    if(Calendar.getInstance().getTime().after(cal.getTime()))
+                    if (Calendar.getInstance().getTime().after(cal.getTime()))
                         PlaceholderContentChercherTrajets.ITEMS.remove(i);
                 }
 
@@ -106,8 +111,40 @@ public class ChercherTrajetsFragment extends Fragment {
                 } else {
                     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), mColumnCount));
                 }
-                recyclerView.setAdapter(new ChercherTrajetsRecyclerViewAdapter(PlaceholderContentChercherTrajets.ITEMS, mainActivity));
+                recyclerView.setAdapter(new ChercherTrajetsRecyclerViewAdapter(PlaceholderContentChercherTrajets.ITEMS, mainActivity, ChercherTrajetsFragment.this));
 
+            }
+        });
+    }
+
+    public void confirmInscription(String trajetId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseUser fUser = auth.getCurrentUser();
+        assert fUser != null;
+
+        String uid = fUser.getUid();
+        final DocumentReference trajetDocRef = db.collection("Trajets").document(trajetId);
+
+        db.collection("Trajets").document(trajetId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot doc) {
+                int nbPlaces = doc.getLong("nombrePlaces").intValue();
+                int placesTaken = ((ArrayList<String>) doc.get("usersUid")).size() - 1;
+
+                Trajet currentTrajet = doc.toObject(Trajet.class);
+                ArrayList<String> usersUid = currentTrajet.getUsersUid();
+                usersUid.add(uid);
+                currentTrajet.setUsersUid(usersUid);
+                if (placesTaken < nbPlaces) {
+                    trajetDocRef.set(currentTrajet, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            initRecyclerView();
+                        }
+                    });
+                }
             }
         });
     }

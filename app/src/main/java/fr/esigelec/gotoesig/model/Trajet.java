@@ -9,7 +9,8 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Trajet implements Serializable {
     Date dateDepart;
-    LatLng pointDepart;
+    Double latitude;
+    Double longitude;
     String transport;
     int retardTolere;
     int nombrePlaces;
@@ -22,7 +23,9 @@ public class Trajet implements Serializable {
     String nomVille;
     String addresseComplete;
 
-    public Trajet() {usersUid = new ArrayList<>();}
+    public Trajet(){
+        usersUid = new ArrayList<>();
+    }
 
     public Date getDateDepart() {
         return dateDepart;
@@ -32,12 +35,20 @@ public class Trajet implements Serializable {
         this.dateDepart = dateDepart;
     }
 
-    public LatLng getPointDepart() {
-        return pointDepart;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setPointDepart(LatLng pointDepart) {
-        this.pointDepart = pointDepart;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getTransport() {

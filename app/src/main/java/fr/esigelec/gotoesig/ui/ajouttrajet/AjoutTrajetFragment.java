@@ -374,7 +374,8 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
                 trajet.setAddresseComplete(addresseComplete);
                 trajet.setDistance(distance);
                 trajet.setDuree(duration);
-                trajet.setPointDepart(currentLatLng);
+                trajet.setLatitude(currentLatLng.latitude);
+                trajet.setLongitude(currentLatLng.longitude);
                 trajet.setDateDepart(calendar.getTime());
                 trajet.setTransport(binding.spinnerTransports.getSelectedItem().toString());
                 trajet.setContribution(Integer.parseInt(binding.contribution.getText().toString()));

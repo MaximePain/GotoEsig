@@ -37,12 +37,16 @@ public class DialogConfirm extends Dialog implements View.OnClickListener {
     public MapView mapView;
     public JSONObject JSONData;
     public LatLng pointDepart;
+    public String trajetUid;
+    public ChercherTrajetsFragment parentFragment;
 
-    public DialogConfirm(Activity a, JSONObject obj, LatLng pointDepart) {
+    public DialogConfirm(Activity a, JSONObject obj, LatLng pointDepart, String trajetUid, ChercherTrajetsFragment parentFragment) {
         super(a);
         this.activity = a;
         this.JSONData = obj;
         this.pointDepart = pointDepart;
+        this.trajetUid = trajetUid;
+        this.parentFragment = parentFragment;
     }
 
     @Override
@@ -86,6 +90,9 @@ public class DialogConfirm extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_yes:
                 map.clear();
+
+                parentFragment.confirmInscription(trajetUid);
+
                 dismiss();
                 break;
             case R.id.btn_no:

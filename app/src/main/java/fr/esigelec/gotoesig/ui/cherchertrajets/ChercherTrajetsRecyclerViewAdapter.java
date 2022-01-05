@@ -33,10 +33,12 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
 
     private final List<PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem> mValues;
     private final Activity activity;
+    private final ChercherTrajetsFragment parentFragment;
 
-    public ChercherTrajetsRecyclerViewAdapter(List<PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem> items, Activity activity) {
+    public ChercherTrajetsRecyclerViewAdapter(List<PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem> items, Activity activity, ChercherTrajetsFragment parentFragment) {
         mValues = items;
         this.activity = activity;
+        this.parentFragment = parentFragment;
     }
 
     @Override
@@ -79,7 +81,7 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
             //on clique sur le bouton inscription
 
             LatLng latLng = new LatLng(holder.item.latitude, holder.item.longitude);
-            showDialog(latLng);
+            showDialog(latLng, holder.item.trajetId);
         });
 
     }
@@ -115,7 +117,7 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
         }
     }
 
-    public void showDialog(LatLng pointDepart) {
+    public void showDialog(LatLng pointDepart, String trajetUid) {
 
         RequestQueue queue = Volley.newRequestQueue(activity);
 
@@ -130,7 +132,7 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
                     public void onResponse(String response) {
                         try {
                             JSONObject obj = new JSONObject(response);
-                            DialogConfirm dialogConfirm = new DialogConfirm(activity, obj, pointDepart);
+                            DialogConfirm dialogConfirm = new DialogConfirm(activity, obj, pointDepart, trajetUid, parentFragment);
                             dialogConfirm.show();
 
                         } catch (JSONException e) {
