@@ -1,14 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.evaluertrajet.EvaluerTrajetFragment">
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:elevation="2dp"
+    android:orientation="vertical"
+    android:background="@drawable/background1"
+    android:layout_margin="20dp"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/nomVille"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Petit-Quevilly"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addresseComplete"
+            android:text="machin rue de machin "
+            android:layout_below="@+id/nomVille"
+            />
+
+        <TextView
+            android:id="@+id/textEnCours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/nomVille"
+            android:layout_alignParentEnd="true"
+            android:paddingTop="5dp"
+            android:text="En cours"
+            android:textColor="#0B0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textEnCours"
+            android:layout_alignTop="@+id/addresseComplete"
+            android:layout_alignEnd="@+id/textEnCours"
+            android:id="@+id/transportText"
+            android:text="Voiture" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        >
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:layout_marginBottom="5dp"
+            />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/dateText"
+            android:layout_marginLeft="2dp"
+            android:layout_toEndOf="@+id/dateText"
+            android:text="10/10/20" />
+
+        <TextView
+            android:layout_below="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/placesText"
+            android:text="Places: "
+            />
+
+        <TextView
+            android:id="@+id/placesNb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/placesText"
+            android:layout_marginLeft="2dp"
+            android:layout_toEndOf="@+id/placesText"
+            android:text="3/4" />
+
+        <CheckBox
+            android:id="@+id/checkboxAutoroute"
+            android:layout_width="30dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:checked="true"
+            android:clickable="false" />
+
+        <TextView
+            android:id="@+id/autorouteText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/checkboxAutoroute"
+            android:layout_alignTop="@+id/dateText"
+            android:text="Autoroute: " />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/prixText"
+            android:text="Prix: "
+            android:layout_alignStart="@+id/autorouteText"
+            android:layout_alignTop="@+id/placesText"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/prixText"
+            android:layout_marginLeft="2dp"
+            android:layout_toEndOf="@+id/prixText"
+            android:id="@+id/prix"
+            android:text="42" />
+
+        <Button
+            android:id="@+id/inscriptionTrajet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/placesText"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="Inscription"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

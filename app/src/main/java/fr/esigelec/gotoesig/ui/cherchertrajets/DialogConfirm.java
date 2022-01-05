@@ -13,11 +13,15 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.geojson.GeoJsonLayer;
 
@@ -68,18 +72,37 @@ public class DialogConfirm extends Dialog implements View.OnClickListener {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 map = googleMap;
-                map.getUiSettings().setMyLocationButtonEnabled(false);
-                if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
+                map.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+                    @Override
+                    public void onMapLoaded() {
 
-                map.addMarker(new MarkerOptions().position(new LatLng(49.383452962302734,1.0768526208801905)).title("ESIGELEC"));
-                map.addMarker(new MarkerOptions().position(pointDepart).title("Point de départ"));
-                LatLng latLng = new LatLng(49.383452962302734,1.0768526208801905);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
-                GeoJsonLayer layer = null;
-                layer = new GeoJsonLayer(map, JSONData);
-                layer.addLayerToMap();
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
+
+                        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+
+                        Marker markerEsig = map.addMarker(new MarkerOptions().position(new LatLng(49.383452962302734, 1.0768526208801905)).title("ESIGELEC"));
+                        Marker markerDepart = map.addMarker(new MarkerOptions().position(pointDepart).title("Point de départ"));
+
+                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                        builder.include(markerEsig.getPosition());
+                        builder.include(markerDepart.getPosition());
+                        LatLngBounds bounds = builder.build();
+
+                        //LatLng latLng = new LatLng(49.383452962302734,1.0768526208801905);
+                        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+
+                        int padding = 30; // offset from edges of the map in pixels
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                        map.moveCamera(cu);
+                        //map.setOnCameraChangeListener(null);
+
+                        GeoJsonLayer layer = null;
+                        layer = new GeoJsonLayer(map, JSONData);
+                        layer.addLayerToMap();
+                    }
+                });
             }
         });
 

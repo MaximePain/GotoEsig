@@ -24,12 +24,12 @@
         android:id="@+id/nav_cherchertrajet"
         android:name="fr.esigelec.gotoesig.ui.cherchertrajets.ChercherTrajetsFragment"
         android:label="@string/chercher_un_trajet"
-        tools:layout="@layout/fragment_cherchertrajets" />
+        tools:layout="@layout/fragment_cherchertrajets_list" />
     <fragment
         android:id="@+id/nav_evaluertrajet"
-        android:name="fr.esigelec.gotoesig.ui.evaluertrajet.EvaluerTrajetFragment"
+        android:name="fr.esigelec.gotoesig.ui.evaluertrajet.EvaluerTrajetsFragment"
         android:label="@string/evaluer_un_trajet"
-        tools:layout="@layout/fragment_evaluer_trajet" />
+        tools:layout="@layout/fragment_evaluer_trajet_list" />
     <fragment
         android:id="@+id/nav_statistiques"
         android:name="fr.esigelec.gotoesig.ui.statistiques.StatistiquesFragment"
