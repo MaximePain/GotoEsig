@@ -108,7 +108,7 @@ public class ChercherTrajetsFragment extends Fragment {
                     int nbplaces = Integer.parseInt(PlaceholderContentChercherTrajets.ITEMS.get(i).placesNb);
                     int nbplacesTaken = PlaceholderContentChercherTrajets.ITEMS.get(i).nbPlaceTaken;
 
-                    if (Calendar.getInstance().getTime().after(cal.getTime()) && (nbplacesTaken >= nbplaces) )
+                    if (Calendar.getInstance().getTime().after(cal.getTime()) || (nbplacesTaken >= nbplaces) )
                         PlaceholderContentChercherTrajets.ITEMS.remove(i);
                 }
 

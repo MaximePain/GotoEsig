@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -90,6 +91,12 @@ public class EvaluerTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Eval
             holder.checkboxAutorouteText.setVisibility(View.INVISIBLE);
         }
 
+        holder.buttonNoter.setOnClickListener(view -> {
+            double ratin = holder.ratinBar.getRating();
+            parentFragment.rateFunc( holder.item.trajetId, ratin);
+        });
+
+        holder.ratinBar.setRating(holder.item.ratin.floatValue());
     }
 
     @Override
@@ -108,6 +115,8 @@ public class EvaluerTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Eval
         public final TextView prixText;
         public final CheckBox checkboxAutoroute;
         public final TextView checkboxAutorouteText;
+        public final RatingBar ratinBar;
+        public final Button buttonNoter;
         public PlaceholderContentEvaluerTrajets.PlaceholderEvaluerTrajetsItem item;
 
         public ViewHolder(FragmentEvaluerTrajetBinding binding) {
@@ -122,6 +131,8 @@ public class EvaluerTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Eval
             prixText = binding.prixText;
             checkboxAutoroute = binding.checkboxAutoroute;
             checkboxAutorouteText = binding.autorouteText;
+            ratinBar = binding.ratingBar;
+            buttonNoter = binding.buttonNoter;
         }
     }
 }

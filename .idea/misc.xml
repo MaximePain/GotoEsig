@@ -3,24 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/drawable/curve_shape.xml" value="0.2703125" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/dialog_confirm.xml" value="0.2" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_ajout_trajet.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_cherchertrajets.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_cherchertrajets_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_evaluer_trajet.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_evaluer_trajet_list.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_mestrajets.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_mestrajets_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Maxime/Documents/&amp;travail/&amp;esig 3a/Android/GotoEsig/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/drawable/background1.xml" value="0.22905982905982905" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/activity_main.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/activity_register.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/app_bar_main.xml" value="0.2630208333333333" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/fragment_ajout_trajet.xml" value="0.2" />
+        <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/fragment_evaluer_trajet.xml" value="0.18504273504273505" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/fragment_mestrajets.xml" value="0.33" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/fragment_mestrajets_list.xml" value="0.33" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/fragment_statistiques.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/nav_header_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/layout/place_recycler_item_layout.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/aries/StudioProjects/GotoEsig/app/src/main/res/menu/activity_main_drawer.xml" value="0.2630208333333333" />

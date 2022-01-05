@@ -5,6 +5,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class Trajet implements Serializable {
@@ -23,9 +25,12 @@ public class Trajet implements Serializable {
     String nomVille;
     String addresseComplete;
     Boolean isVehicule;
+    Map<String, Double> notes;
 
     public Trajet(){
+
         usersUid = new ArrayList<>();
+        notes = new HashMap<>();
     }
 
     public Date getDateDepart() {
@@ -146,5 +151,13 @@ public class Trajet implements Serializable {
 
     public void setIsVehicule(Boolean isVehicule) {
         this.isVehicule = isVehicule;
+    }
+
+    public Map<String, Double> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Map<String, Double> notes) {
+        this.notes = notes;
     }
 }

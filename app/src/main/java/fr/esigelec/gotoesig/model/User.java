@@ -7,14 +7,12 @@ import java.io.Serializable;
 public class User implements Serializable {
     String Email;
     String Nom;
-    String Phone;
     String Prenom;
     String Image;
 
-    public User(String email, String nom, String phone, String prenom, String image) {
+    public User(String email, String nom, String prenom, String image) {
         Email = email;
         Nom = nom;
-        Phone = phone;
         Prenom = prenom;
         Image = image;
     }
@@ -35,14 +33,6 @@ public class User implements Serializable {
 
     public void setNom(String nom) {
         Nom = nom;
-    }
-
-    public String getPhone() {
-        return Phone;
-    }
-
-    public void setPhone(String phone) {
-        Phone = phone;
     }
 
     public String getPrenom() {

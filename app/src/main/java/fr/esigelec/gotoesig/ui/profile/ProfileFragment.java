@@ -1,6 +1,7 @@
 package fr.esigelec.gotoesig.ui.profile;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Geocoder;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +69,6 @@ public class ProfileFragment extends Fragment {
         profileEmail.setText(profileEmail.getText() + user.getEmail());
         profileNom.setText(profileNom.getText() + user.getNom());
         profilePrenom.setText(profilePrenom.getText() + user.getPrenom());
-        profileTel.setText(profileTel.getText() + user.getPhone());
 
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -87,8 +88,13 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
+        TelephonyManager tMgr = (TelephonyManager)getContext().getSystemService(Context.TELEPHONY_SERVICE);
+        String numTel = tMgr.getLine1Number();
 
+        if(numTel != null)
+            binding.profileTel.setText(numTel);
 
         return view;
     }
+
 }

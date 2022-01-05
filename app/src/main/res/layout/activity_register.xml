@@ -63,6 +63,7 @@
         android:layout_marginBottom="10dp"
         android:hint="@string/pr_nom"
         />
+    <!--
     <EditText
         android:id="@+id/inputTel"
         android:layout_width="200dp"
@@ -71,6 +72,7 @@
         android:layout_marginBottom="10dp"
         android:hint="@string/num_ro_de_t_l_phone"
         />
+    -->
 
     <LinearLayout
         android:layout_width="match_parent"

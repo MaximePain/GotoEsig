@@ -23,6 +23,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Map;
 
 import fr.esigelec.gotoesig.MainActivity;
 import fr.esigelec.gotoesig.databinding.FragmentCherchertrajetsListBinding;
@@ -77,11 +78,10 @@ public class EvaluerTrajetsFragment extends Fragment {
 
         String uid = fUser.getUid();
 
-        db.collection("Trajets").whereArrayContains("usersUid", uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Trajets").whereNotEqualTo("ownerUid", uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot doc : queryDocumentSnapshots) {
-
                     PlaceholderContentEvaluerTrajets.ITEMS.add(new PlaceholderContentEvaluerTrajets.PlaceholderEvaluerTrajetsItem(
                             doc.getString("nomVille"),
                             doc.getString("addresseComplete"),
@@ -94,7 +94,8 @@ public class EvaluerTrajetsFragment extends Fragment {
                             doc.getDouble("latitude"),
                             doc.getDouble("longitude"),
                             doc.getId(),
-                            doc.getBoolean("isVehicule")
+                            doc.getBoolean("isVehicule"),
+                            ((Map<String, Double>) doc.get("notes")).get(uid)
                     ));
                 }
 
@@ -115,6 +116,32 @@ public class EvaluerTrajetsFragment extends Fragment {
                 }
                 recyclerView.setAdapter(new EvaluerTrajetsRecyclerViewAdapter(PlaceholderContentEvaluerTrajets.ITEMS, mainActivity, EvaluerTrajetsFragment.this));
 
+            }
+        });
+    }
+
+    public void rateFunc(String trajetId, Double ratin) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseUser fUser = auth.getCurrentUser();
+        assert fUser != null;
+
+        String uid = fUser.getUid();
+        final DocumentReference trajetDocRef = db.collection("Trajets").document(trajetId);
+
+        db.collection("Trajets").document(trajetId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(@NonNull DocumentSnapshot doc) {
+                Trajet currentTrajet = doc.toObject(Trajet.class);
+                Map<String, Double> notes = currentTrajet.getNotes();
+                notes.put(uid, ratin);
+                trajetDocRef.set(currentTrajet, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        initRecyclerView();
+                    }
+                });
             }
         });
     }

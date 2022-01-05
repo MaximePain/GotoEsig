@@ -23,8 +23,9 @@ public class PlaceholderContentEvaluerTrajets {
         public final Double longitude;
         public final String trajetId;
         public final Boolean isVehicule;
+        public final Double ratin;
 
-        public PlaceholderEvaluerTrajetsItem(String nomVille, String addresseComplete, String transportText, Date date, String placesNb, String prix, Boolean checkboxAutoroute, Integer nbPlaceTaken, Double latitude, Double longitude, String trajetId, Boolean isVehicule) {
+        public PlaceholderEvaluerTrajetsItem(String nomVille, String addresseComplete, String transportText, Date date, String placesNb, String prix, Boolean checkboxAutoroute, Integer nbPlaceTaken, Double latitude, Double longitude, String trajetId, Boolean isVehicule, Double ratin) {
             this.nomVille = nomVille;
             this.addresseComplete = addresseComplete;
             this.transportText = transportText;
@@ -37,6 +38,9 @@ public class PlaceholderContentEvaluerTrajets {
             this.longitude = longitude;
             this.trajetId = trajetId;
             this.isVehicule = isVehicule;
+            if (ratin == null)
+                ratin = 0.0;
+            this.ratin = ratin;
         }
     }
 }

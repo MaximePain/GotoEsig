@@ -51,7 +51,6 @@ public class RegisterActivity extends AppCompatActivity {
         EditText inputPassword = findViewById(R.id.inputPassword);
         EditText inputNom = findViewById(R.id.inputNom);
         EditText inputPrenom = findViewById(R.id.inputPrenom);
-        EditText inputTel = findViewById(R.id.inputTel);
 
         Button register = findViewById(R.id.buttonInscription);
         register.setOnClickListener(view -> {
@@ -60,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             User user = new User(inputEmail.getText().toString().toLowerCase(Locale.ROOT),
                     inputNom.getText().toString(),
-                    inputTel.getText().toString(),
                     inputPrenom.getText().toString(),
                     ""
             );
