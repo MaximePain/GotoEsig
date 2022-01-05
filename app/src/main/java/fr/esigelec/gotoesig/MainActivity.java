@@ -4,10 +4,13 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -17,7 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -27,6 +32,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
 
 import fr.esigelec.gotoesig.databinding.ActivityMainBinding;
 import fr.esigelec.gotoesig.model.User;
@@ -44,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //On gère la recupération des données utilisateur
         Intent intent = getIntent();
-        currentUser = (User)intent.getSerializableExtra("User");
+        currentUser = (User) intent.getSerializableExtra("User");
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -64,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        ImageView profilePictureNav = (ImageView)navigationView.getHeaderView(0).findViewById(R.id.profilePictureNav);
+        Bitmap bm = ImageEncoder.decodeImageBitmap(currentUser.getImage());
+        profilePictureNav.setImageBitmap(bm);
+
+        TextView nomNav = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nomNav);
+        nomNav.setText(currentUser.getNom() + " " + currentUser.getPrenom());
+
+        showScoreNav();
     }
 
     @Override
@@ -78,6 +96,35 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void showScoreNav(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        FirebaseUser fUser = auth.getCurrentUser();
+        assert fUser != null;
+
+        String uid = fUser.getUid();
+
+
+        db.collection("Trajets").whereEqualTo("ownerUid", uid).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                Double score = 0.0;
+                int nbNotes = 0;
+                for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                    Map<String, Double> notes = (Map<String, Double>) doc.get("notes");
+                    for (Map.Entry<String, Double> entry : notes.entrySet()) {
+                        score += entry.getValue();
+                        nbNotes++;
+                    }
+                }
+                score /= nbNotes;
+                TextView emailNav = (TextView) binding.navView.getHeaderView(0).findViewById(R.id.emailNav);
+                emailNav.setText("Score: " + score);
+            }
+        });
     }
 
 

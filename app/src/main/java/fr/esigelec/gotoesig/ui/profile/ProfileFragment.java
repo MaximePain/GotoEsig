@@ -88,11 +88,11 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-        TelephonyManager tMgr = (TelephonyManager)getContext().getSystemService(Context.TELEPHONY_SERVICE);
+        /*TelephonyManager tMgr = (TelephonyManager)getContext().getSystemService(Context.TELEPHONY_SERVICE);
         String numTel = tMgr.getLine1Number();
 
         if(numTel != null)
-            binding.profileTel.setText(numTel);
+            binding.profileTel.setText(numTel);*/
 
         return view;
     }
