@@ -68,7 +68,7 @@ public class EvaluerTrajetsFragment extends Fragment {
     }
 
     public void initRecyclerView() {
-        PlaceholderContentChercherTrajets.ITEMS.clear();
+        PlaceholderContentEvaluerTrajets.ITEMS.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
 

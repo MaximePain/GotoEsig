@@ -117,7 +117,7 @@ public class PlacesAutoCompleteAdapter extends RecyclerView.Adapter<PlacesAutoCo
                 //.setCountry("BD")
                 //.setTypeFilter(TypeFilter.ADDRESS)
                 .setSessionToken(token)
-                .setQuery(constraint.toString())
+                .setQuery(constraint.toString()).setCountry("FR")
                 .build();
 
         Task<FindAutocompletePredictionsResponse> autocompletePredictions = placesClient.findAutocompletePredictions(request);

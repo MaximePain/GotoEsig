@@ -131,14 +131,22 @@
             android:id="@+id/prix"
             android:text="42" />
 
-        <Button
-            android:id="@+id/inscriptionTrajet"
+        <RatingBar
+            android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/placesText"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:text="Inscription"
+            android:rating="2.5"
+            />
+        <Button
+            android:id="@+id/buttonNoter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Noter"
+            android:layout_below="@id/ratingBar"
+            android:layout_centerHorizontal="true"
             />
 
     </RelativeLayout>

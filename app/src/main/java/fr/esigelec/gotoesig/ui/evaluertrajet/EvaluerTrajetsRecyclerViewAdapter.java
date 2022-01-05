@@ -90,13 +90,6 @@ public class EvaluerTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Eval
             holder.checkboxAutorouteText.setVisibility(View.INVISIBLE);
         }
 
-
-        holder.inscriptionTrajet.setOnClickListener(view -> {
-            //on clique sur le bouton inscription
-
-            LatLng latLng = new LatLng(holder.item.latitude, holder.item.longitude);
-        });
-
     }
 
     @Override
@@ -115,7 +108,6 @@ public class EvaluerTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Eval
         public final TextView prixText;
         public final CheckBox checkboxAutoroute;
         public final TextView checkboxAutorouteText;
-        public final Button inscriptionTrajet;
         public PlaceholderContentEvaluerTrajets.PlaceholderEvaluerTrajetsItem item;
 
         public ViewHolder(FragmentEvaluerTrajetBinding binding) {
@@ -130,7 +122,6 @@ public class EvaluerTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Eval
             prixText = binding.prixText;
             checkboxAutoroute = binding.checkboxAutoroute;
             checkboxAutorouteText = binding.autorouteText;
-            inscriptionTrajet = binding.inscriptionTrajet;
         }
     }
 }
