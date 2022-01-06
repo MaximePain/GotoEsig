@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        ImageView profilePictureNav = (ImageView)navigationView.getHeaderView(0).findViewById(R.id.profilePictureNav);
+        ImageView profilePictureNav = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.profilePictureNav);
         Bitmap bm = ImageEncoder.decodeImageBitmap(currentUser.getImage());
         profilePictureNav.setImageBitmap(bm);
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void showScoreNav(){
+    public void showScoreNav() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
                         nbNotes++;
                     }
                 }
-                score /= nbNotes;
+                if (nbNotes != 0)
+                    score /= nbNotes;
                 TextView emailNav = (TextView) binding.navView.getHeaderView(0).findViewById(R.id.emailNav);
                 emailNav.setText("Score: " + score);
             }
@@ -190,5 +191,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

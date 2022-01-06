@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         EditText inputEmail = findViewById(R.id.inputEmail);
         EditText inputPassword = findViewById(R.id.inputPassword);
+        EditText inputPassConfirmation = findViewById(R.id.inputPassConfirmation);
         EditText inputNom = findViewById(R.id.inputNom);
         EditText inputPrenom = findViewById(R.id.inputPrenom);
 
@@ -64,6 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
             );
 
             String password = inputPassword.getText().toString();
+            String passConfirmation = inputPassConfirmation.getText().toString();
+
+            if(!password.equals(passConfirmation))
+            {
+                Toast.makeText(this, "Les mots de passe ne correspondent pas", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(password.length() < 6)
+            {
+                Toast.makeText(this, "Le mot de passe est trop court", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             if (selectedImage != null) {
                 selectedImageBitmap = ImageEncoder.getResizedBitmap(selectedImageBitmap, 852, 480);
@@ -126,5 +140,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }

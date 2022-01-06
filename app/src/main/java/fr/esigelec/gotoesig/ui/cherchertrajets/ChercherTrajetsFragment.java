@@ -83,33 +83,31 @@ public class ChercherTrajetsFragment extends Fragment {
             public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot doc : queryDocumentSnapshots) {
                     if (!((ArrayList<String>) doc.get("usersUid")).contains(uid)) {
-                        PlaceholderContentChercherTrajets.ITEMS.add(new PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem(
-                                doc.getString("nomVille"),
-                                doc.getString("addresseComplete"),
-                                doc.getString("transport"),
-                                doc.getDate("dateDepart"),
-                                doc.getLong("nombrePlaces").toString(),
-                                doc.getLong("contribution").toString(),
-                                doc.getBoolean("autoroute"),
-                                ((ArrayList<String>) doc.get("usersUid")).size() - 1,
-                                doc.getDouble("latitude"),
-                                doc.getDouble("longitude"),
-                                doc.getId(),
-                                doc.getBoolean("isVehicule")
-                        ));
+
+                        Date date = doc.getDate("dateDepart");
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date);
+
+                        int nbplaces = doc.getLong("nombrePlaces").intValue();
+                        int nbplacesTaken = ((ArrayList<String>) doc.get("usersUid")).size() - 1;
+
+
+                        if (Calendar.getInstance().getTime().before(cal.getTime()) && (nbplacesTaken < nbplaces))
+                            PlaceholderContentChercherTrajets.ITEMS.add(new PlaceholderContentChercherTrajets.PlaceholderChercherTrajetsItem(
+                                    doc.getString("nomVille"),
+                                    doc.getString("addresseComplete"),
+                                    doc.getString("transport"),
+                                    doc.getDate("dateDepart"),
+                                    doc.getLong("nombrePlaces").toString(),
+                                    doc.getLong("contribution").toString(),
+                                    doc.getBoolean("autoroute"),
+                                    nbplacesTaken,
+                                    doc.getDouble("latitude"),
+                                    doc.getDouble("longitude"),
+                                    doc.getId(),
+                                    doc.getBoolean("isVehicule")
+                            ));
                     }
-                }
-
-                for (int i = 0; i < PlaceholderContentChercherTrajets.ITEMS.size(); i++) {
-                    Date date = PlaceholderContentChercherTrajets.ITEMS.get(i).date;
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(date);
-
-                    int nbplaces = Integer.parseInt(PlaceholderContentChercherTrajets.ITEMS.get(i).placesNb);
-                    int nbplacesTaken = PlaceholderContentChercherTrajets.ITEMS.get(i).nbPlaceTaken;
-
-                    if (Calendar.getInstance().getTime().after(cal.getTime()) || (nbplacesTaken >= nbplaces) )
-                        PlaceholderContentChercherTrajets.ITEMS.remove(i);
                 }
 
                 RecyclerView recyclerView = binding.list;

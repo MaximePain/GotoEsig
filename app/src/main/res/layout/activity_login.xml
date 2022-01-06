@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:hint="Mot de passe"
+        android:inputType="textPassword"
         android:layout_marginBottom="10dp"
         />
 

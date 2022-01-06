@@ -82,31 +82,32 @@ public class EvaluerTrajetsFragment extends Fragment {
             @Override
             public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot doc : queryDocumentSnapshots) {
-                    PlaceholderContentEvaluerTrajets.ITEMS.add(new PlaceholderContentEvaluerTrajets.PlaceholderEvaluerTrajetsItem(
-                            doc.getString("nomVille"),
-                            doc.getString("addresseComplete"),
-                            doc.getString("transport"),
-                            doc.getDate("dateDepart"),
-                            doc.getLong("nombrePlaces").toString(),
-                            doc.getLong("contribution").toString(),
-                            doc.getBoolean("autoroute"),
-                            ((ArrayList<String>) doc.get("usersUid")).size() - 1,
-                            doc.getDouble("latitude"),
-                            doc.getDouble("longitude"),
-                            doc.getId(),
-                            doc.getBoolean("isVehicule"),
-                            ((Map<String, Double>) doc.get("notes")).get(uid)
-                    ));
+
+                    if (((ArrayList<String>) doc.get("usersUid")).contains(uid)) {
+
+                        Date date = doc.getDate("dateDepart");
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date);
+
+                        if (Calendar.getInstance().getTime().after(cal.getTime()))
+                            PlaceholderContentEvaluerTrajets.ITEMS.add(new PlaceholderContentEvaluerTrajets.PlaceholderEvaluerTrajetsItem(
+                                    doc.getString("nomVille"),
+                                    doc.getString("addresseComplete"),
+                                    doc.getString("transport"),
+                                    doc.getDate("dateDepart"),
+                                    doc.getLong("nombrePlaces").toString(),
+                                    doc.getLong("contribution").toString(),
+                                    doc.getBoolean("autoroute"),
+                                    ((ArrayList<String>) doc.get("usersUid")).size() - 1,
+                                    doc.getDouble("latitude"),
+                                    doc.getDouble("longitude"),
+                                    doc.getId(),
+                                    doc.getBoolean("isVehicule"),
+                                    ((Map<String, Double>) doc.get("notes")).get(uid)
+                            ));
+                    }
                 }
 
-                for (int i = 0; i < PlaceholderContentEvaluerTrajets.ITEMS.size(); i++) {
-                    Date date = PlaceholderContentEvaluerTrajets.ITEMS.get(i).date;
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(date);
-
-                    if (Calendar.getInstance().getTime().before(cal.getTime()))
-                        PlaceholderContentEvaluerTrajets.ITEMS.remove(i);
-                }
 
                 RecyclerView recyclerView = binding.list;
                 if (mColumnCount <= 1) {

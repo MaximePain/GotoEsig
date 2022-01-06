@@ -6,28 +6,25 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/profile" />
         <item
             android:id="@+id/nav_ajouttrajet"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/ajouter_un_trajet" />
         <item
             android:id="@+id/nav_mestrajets"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/mes_trajets" />
         <item
             android:id="@+id/nav_cherchertrajet"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/chercher_un_trajet" />
         <item
             android:id="@+id/nav_evaluertrajet"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/evaluer_un_trajet" />
         <item
             android:id="@+id/nav_statistiques"
-            android:icon="@drawable/ic_menu_camera"
             android:title="@string/statistiques" />
+        <item
+            android:id="@+id/nav_quitter"
+            android:title="Quitter" />
 
 
     </group>

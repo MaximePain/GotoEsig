@@ -57,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
             String email = emailInput.getText().toString().toLowerCase(Locale.ROOT);
             String password = passwordInput.getText().toString();
 
+            if(email == null || email.equals("") || password == null || password.equals(""))
+                return;
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -84,5 +87,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+
     }
 }

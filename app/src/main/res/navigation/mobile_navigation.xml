@@ -35,5 +35,10 @@
         android:name="fr.esigelec.gotoesig.ui.statistiques.StatistiquesFragment"
         android:label="@string/statistiques"
         tools:layout="@layout/fragment_statistiques" />
+    <fragment
+        android:id="@+id/nav_quitter"
+        android:name="fr.esigelec.gotoesig.ui.quitter.QuitterFragment"
+        android:label="Quitter"
+        tools:layout="@layout/fragment_quitter" />
 
 </navigation>

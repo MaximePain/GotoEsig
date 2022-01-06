@@ -90,7 +90,8 @@ public class StatistiquesFragment extends Fragment {
                     }
                 }
 
-                score /= nbNotes;
+                if(nbNotes != 0)
+                    score /= nbNotes;
 
                 binding.contributionTotal.setText("" + contributionTotal);
                 binding.score.setText(score.toString());
