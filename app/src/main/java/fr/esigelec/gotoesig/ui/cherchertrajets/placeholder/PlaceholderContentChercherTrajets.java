@@ -43,8 +43,10 @@ public class PlaceholderContentChercherTrajets {
         public final Double longitude;
         public final String trajetId;
         public final Boolean isVehicule;
+        public final Long distance;
+        public final Long duree;
 
-        public PlaceholderChercherTrajetsItem(String nomVille, String addresseComplete, String transportText, Date date, String placesNb, String prix, Boolean checkboxAutoroute, Integer nbPlaceTaken, Double latitude, Double longitude, String trajetId, Boolean isVehicule) {
+        public PlaceholderChercherTrajetsItem(String nomVille, String addresseComplete, String transportText, Date date, String placesNb, String prix, Boolean checkboxAutoroute, Integer nbPlaceTaken, Double latitude, Double longitude, String trajetId, Boolean isVehicule, Long distance, Long duree) {
             this.nomVille = nomVille;
             this.addresseComplete = addresseComplete;
             this.transportText = transportText;
@@ -57,6 +59,8 @@ public class PlaceholderContentChercherTrajets {
             this.longitude = longitude;
             this.trajetId = trajetId;
             this.isVehicule = isVehicule;
+            this.distance = distance;
+            this.duree = duree;
         }
     }
 }

@@ -105,7 +105,9 @@ public class ChercherTrajetsFragment extends Fragment {
                                     doc.getDouble("latitude"),
                                     doc.getDouble("longitude"),
                                     doc.getId(),
-                                    doc.getBoolean("isVehicule")
+                                    doc.getBoolean("isVehicule"),
+                                    doc.getLong("distance"),
+                                    doc.getLong("duree")
                             ));
                     }
                 }

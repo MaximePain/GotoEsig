@@ -91,7 +91,7 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
             //on clique sur le bouton inscription
 
             LatLng latLng = new LatLng(holder.item.latitude, holder.item.longitude);
-            showDialog(latLng, holder.item.trajetId);
+            showDialog(latLng, holder.item.trajetId, holder.item.distance, holder.item.duree, holder.item.transportText);
         });
 
     }
@@ -131,14 +131,19 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
         }
     }
 
-    public void showDialog(LatLng pointDepart, String trajetUid) {
+    public void showDialog(LatLng pointDepart, String trajetUid, Long distance, Long duree, String transport) {
 
         RequestQueue queue = Volley.newRequestQueue(activity);
 
         String api_key = activity.getResources().getString(R.string.openrouteservice_key);
         String profile = "driving-car";
 
-        String url = "https://api.openrouteservice.org/v2/directions/driving-car?api_key=" + api_key + "&start=" + pointDepart.longitude + "," + pointDepart.latitude + "&end=1.0768526208801905,49.383452962302734";
+        if(transport.equals("Vélo"))
+            profile = "cycling-regular";
+        else if(transport.equals("A pied"))
+            profile = "foot-walking";
+
+        String url = "https://api.openrouteservice.org/v2/directions/" + profile + "?api_key=" + api_key + "&start=" + pointDepart.longitude + "," + pointDepart.latitude + "&end=1.0768526208801905,49.383452962302734";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -146,7 +151,7 @@ public class ChercherTrajetsRecyclerViewAdapter extends RecyclerView.Adapter<Che
                     public void onResponse(String response) {
                         try {
                             JSONObject obj = new JSONObject(response);
-                            DialogConfirm dialogConfirm = new DialogConfirm(activity, obj, pointDepart, trajetUid, parentFragment);
+                            DialogConfirm dialogConfirm = new DialogConfirm(activity, obj, pointDepart, trajetUid, distance, duree, parentFragment);
                             dialogConfirm.show();
 
                         } catch (JSONException e) {

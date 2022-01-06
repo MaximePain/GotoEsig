@@ -316,6 +316,12 @@ public class AjoutTrajetFragment extends Fragment  implements PlacesAutoComplete
         String api_key = getResources().getString(R.string.openrouteservice_key);
         String profile = "driving-car";
 
+        String spinnerValue = binding.spinnerTransports.getSelectedItem().toString();
+        if(spinnerValue.equals("Vélo"))
+            profile = "cycling-regular";
+        else if(spinnerValue.equals("A pied"))
+            profile = "foot-walking";
+
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(mainActivity);
             String URL = "https://api.openrouteservice.org/v2/matrix/" + profile;

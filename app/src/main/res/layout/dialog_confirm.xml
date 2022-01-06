@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="800dp"
-    android:padding="20dp"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/txt_titre"
@@ -13,7 +13,7 @@
         android:layout_margin="10dp"
         android:text="Confirmation de l'inscription"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_titre2"
@@ -21,22 +21,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Trajet: "
-        android:textSize="18sp"
-        />
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/distanceDureeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="-"
+        android:textSize="18sp" />
+
 
     <com.google.android.gms.maps.MapView xmlns:map="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:id="@+id/mapView"
-        map:mapType="normal"
         map:liteMode="true"
-        />
+        map:mapType="normal" />
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btn_no"
@@ -44,8 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="40dp"
-            android:text="Annuler"
-            />
+            android:text="Annuler" />
 
         <Button
             android:id="@+id/btn_yes"
@@ -53,8 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="40dp"
-            android:text="Confirmer"
-            />
+            android:text="Confirmer" />
     </RelativeLayout>
 
 </LinearLayout>

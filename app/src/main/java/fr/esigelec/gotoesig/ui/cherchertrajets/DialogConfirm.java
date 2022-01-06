@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -43,13 +44,18 @@ public class DialogConfirm extends Dialog implements View.OnClickListener {
     public LatLng pointDepart;
     public String trajetUid;
     public ChercherTrajetsFragment parentFragment;
+    public Long distance;
+    public Long duree;
+    public TextView distanceDureeText;
 
-    public DialogConfirm(Activity a, JSONObject obj, LatLng pointDepart, String trajetUid, ChercherTrajetsFragment parentFragment) {
+    public DialogConfirm(Activity a, JSONObject obj, LatLng pointDepart, String trajetUid, Long distance, Long duree, ChercherTrajetsFragment parentFragment) {
         super(a);
         this.activity = a;
         this.JSONData = obj;
         this.pointDepart = pointDepart;
         this.trajetUid = trajetUid;
+        this.distance = distance;
+        this.duree = duree;
         this.parentFragment = parentFragment;
     }
 
@@ -60,6 +66,10 @@ public class DialogConfirm extends Dialog implements View.OnClickListener {
         setContentView(R.layout.dialog_confirm);
         yes = (Button) findViewById(R.id.btn_yes);
         no = (Button) findViewById(R.id.btn_no);
+
+        distanceDureeText = (TextView)findViewById(R.id.distanceDureeText);
+        distanceDureeText.setText("Distance: " + this.distance + "km - Durée: " + this.duree + "min");
+
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         yes.setOnClickListener(this);
